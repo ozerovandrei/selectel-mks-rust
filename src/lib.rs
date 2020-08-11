@@ -1,6 +1,6 @@
-mod error;
+mod errors;
 
-use error::Error;
+use errors::MKSError;
 use std::time::Duration;
 use url::Url;
 
@@ -30,19 +30,19 @@ impl MKS {
     /// Construct the new MKS struct with default configuration.
     ///
     /// Use `Builder` to configure the client.
-    pub fn new(base_endpoint: &str, token: &str) -> Result<MKS, Error> {
+    pub fn new(base_endpoint: &str, token: &str) -> Result<MKS, MKSError> {
         MKS::with_builder(base_endpoint, token, MKS::builder())
     }
 
-    fn with_builder(base_endpoint: &str, token: &str, builder: Builder) -> Result<MKS, Error> {
+    fn with_builder(base_endpoint: &str, token: &str, builder: Builder) -> Result<MKS, MKSError> {
         // Check token.
         if token.is_empty() {
-            return Err(Error::TokenError);
+            return Err(MKSError::EmptyTokenError);
         }
         let token = String::from(token);
 
         // Check base endpoint.
-        let base_endpoint = Url::parse(base_endpoint).map_err(|_| Error::EndpointError)?;
+        let base_endpoint = Url::parse(base_endpoint).map_err(|_| MKSError::EndpointError)?;
 
         // Use the provided Hyper client or configure a new one.
         let client = match builder.client {
@@ -116,7 +116,7 @@ impl Builder {
     }
 
     /// Create `MKS` with the configuration in this builder.
-    pub fn build(self, base_endpoint: &str, token: &str) -> Result<MKS, Error> {
+    pub fn build(self, base_endpoint: &str, token: &str) -> Result<MKS, MKSError> {
         MKS::with_builder(base_endpoint, token, self)
     }
 }
@@ -152,5 +152,21 @@ mod tests {
         assert_eq!(mks.token, String::from("token_b"));
         assert_eq!(mks.user_agent, format!("{}/{}", PKG_NAME, PKG_VERSION));
         assert_eq!(mks.timeout, Duration::from_secs(10));
+    }
+
+    #[test]
+    fn new_mks_bad_base_endpoint() {
+        assert_eq!(
+            MKS::new("bad_url", "token_c").err(),
+            Some(errors::MKSError::EndpointError)
+        );
+    }
+
+    #[test]
+    fn new_mks_emtpy_token() {
+        assert_eq!(
+            MKS::new("https://example.org", "").err(),
+            Some(errors::MKSError::EmptyTokenError)
+        );
     }
 }
