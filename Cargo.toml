@@ -10,7 +10,17 @@ name = "mks"
 repository = "https://github.com/ozerovandrei/mks-rust.git"
 version = "0.1.0"
 
+[features]
+default = ["rustls"]
+rustls = ["hyper-rustls"]
+rust-native-tls = ["native-tls", "hyper-tls"]
+
 [dependencies]
+hyper = "^0.13"
+hyper-rustls = { version = "^0.21", optional = true }
+hyper-tls = { version = "^0.4", optional = true }
+native-tls = { version = "^0.2", optional = true }
+url = "^2"
 
 [lib]
 name = "mks"
