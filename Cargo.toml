@@ -1,0 +1,17 @@
+[package]
+authors = ["Andrei Ozerov <andrei.ozerov92@gmail.com>"]
+categories = ["api-bindings"]
+description = "Rust SDK for Selectel Managed Kubernetes Service."
+edition = "2018"
+homepage = "https://github.com/ozerovandrei/mks-rust"
+keywords = ["api", "cloud", "selectel", "mks", "kubernetes"]
+license = "MIT"
+name = "mks"
+repository = "https://github.com/ozerovandrei/mks-rust.git"
+version = "0.1.0"
+
+[dependencies]
+
+[lib]
+name = "mks"
+path = "src/lib.rs"
