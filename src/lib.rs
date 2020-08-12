@@ -171,6 +171,14 @@ impl MKS {
     }
 }
 
+/// Methods to work with Kubernetes versions.
+impl MKS {
+    /// List all Kubernetes versions.
+    pub fn list_kube_versions(&self) -> Result<Vec<kubeversion::schemas::KubeVersion>, Error> {
+        kubeversion::api::list_kube_versions(self)
+    }
+}
+
 /// Builder for `MKS`.
 pub struct Builder {
     /// Hyper client to use for the connection.

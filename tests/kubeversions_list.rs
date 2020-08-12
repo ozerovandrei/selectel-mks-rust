@@ -1,7 +1,5 @@
 mod common;
 
-use mks;
-
 #[test]
 fn list_kubeversions() {
     if !common::integration_tests_are_enabled() {
@@ -9,7 +7,8 @@ fn list_kubeversions() {
     }
 
     let client = common::setup();
-    let kube_versions = mks::kubeversion::api::list_kube_versions(client)
+    let kube_versions = client
+        .list_kube_versions()
         .expect("Failed to list Kubernetes versions");
 
     assert!(!kube_versions.is_empty());
