@@ -1,5 +1,5 @@
 /// Supported API version.
-pub const API_VERSION: &'static str = "v1";
+pub const API_VERSION: &str = "v1";
 
 /// Kubeversions resource URL.
-pub const KUBEVERSIONS: &'static str = "kubeversions";
+pub const KUBEVERSIONS: &str = "kubeversions";

@@ -21,8 +21,8 @@ pub mod resource_url;
 pub mod kubeversion;
 
 // Environment variables from Cargo.
-static PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
-static PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+static PKG_NAME: &str = env!("CARGO_PKG_NAME");
+static PKG_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// `Client` struct is used to make calls to the MKS API.
 pub struct Client {
