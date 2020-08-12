@@ -1,5 +1,3 @@
-mod error;
-
 use error::Error;
 use http::{HeaderMap, StatusCode};
 use std::time::Duration;
@@ -16,6 +14,11 @@ type HttpsConnector = hyper_rustls::HttpsConnector<hyper::client::HttpConnector>
 use hyper_tls;
 #[cfg(feature = "rust-native-tls")]
 type HttpsConnector = hyper_tls::HttpsConnector<hyper::client::HttpConnector>;
+
+pub mod error;
+pub mod resource_url;
+
+pub mod kubeversion;
 
 // Environment variables from Cargo.
 static PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
@@ -81,7 +84,7 @@ impl MKS {
 
     // Prepare a new request.
     fn new_request(
-        &mut self,
+        &self,
         method: Method,
         path: &str,
         body: Option<String>,

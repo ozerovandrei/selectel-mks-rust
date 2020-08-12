@@ -1,6 +1,9 @@
 /// MKS error return type.
 #[derive(Debug)]
 pub enum Error {
+    /// Failed to deserialize response body.
+    DeserializeError(serde_json::Error, String),
+
     /// Bad endpoint value.
     EndpointError,
 
@@ -26,6 +29,9 @@ pub enum Error {
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &*self {
+            Error::DeserializeError(err, body) => {
+                format!("failed to deserialize body: {}, error: {}", err, body).fmt(f)
+            }
             Error::EndpointError => "failed to parse base endpoint URL".fmt(f),
             Error::EmptyTokenError => "token cannot be empty".fmt(f),
             Error::HttpError(status, err) => {
