@@ -1,6 +1,6 @@
 /// MKS error return type.
 #[derive(Debug)]
-pub enum MKSError {
+pub enum Error {
     /// Bad endpoint value.
     EndpointError,
 
@@ -23,32 +23,32 @@ pub enum MKSError {
     UrlError,
 }
 
-impl std::fmt::Display for MKSError {
+impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &*self {
-            MKSError::EndpointError => "failed to parse base endpoint URL".fmt(f),
-            MKSError::EmptyTokenError => "token cannot be empty".fmt(f),
-            MKSError::HttpError(status, err) => {
+            Error::EndpointError => "failed to parse base endpoint URL".fmt(f),
+            Error::EmptyTokenError => "token cannot be empty".fmt(f),
+            Error::HttpError(status, err) => {
                 format!("bad status code: {}, error body: {}", status, err).fmt(f)
             }
-            MKSError::HyperError(err) => {
+            Error::HyperError(err) => {
                 format!("failed to make the request due to Hyper error: {}", err).fmt(f)
             }
-            MKSError::RequestError => "failed to build a new request".fmt(f),
-            MKSError::TimeoutError => "request timed out".fmt(f),
-            MKSError::UrlError => "failed to parse URL for request".fmt(f),
+            Error::RequestError => "failed to build a new request".fmt(f),
+            Error::TimeoutError => "request timed out".fmt(f),
+            Error::UrlError => "failed to parse URL for request".fmt(f),
         }
     }
 }
 
-impl std::convert::From<hyper::Error> for MKSError {
+impl std::convert::From<hyper::Error> for Error {
     fn from(e: hyper::Error) -> Self {
-        MKSError::HyperError(e)
+        Error::HyperError(e)
     }
 }
 
-impl std::convert::From<tokio::time::Elapsed> for MKSError {
+impl std::convert::From<tokio::time::Elapsed> for Error {
     fn from(_e: tokio::time::Elapsed) -> Self {
-        MKSError::TimeoutError
+        Error::TimeoutError
     }
 }
