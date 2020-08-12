@@ -1,16 +1,16 @@
 use selectel_mks::Client;
 use std::env;
 
-const ENV_X_AUTH_TOKEN: &str = "X_AUTH_TOKEN";
-const ENV_MKS_ENDPOINT: &str = "MKS_ENDPOINT";
-const ENV_MKS_INTEGRATION_TESTING: &str = "MKS_INTEGRATION_TESTING";
+const TEST_AUTH_TOKEN: &str = "MKS_TEST_AUTH_TOKEN";
+const TEST_ENDPOINT: &str = "MKS_TEST_ENDPOINT";
+const TEST_INTEGRATION: &str = "MKS_TEST_INTEGRATION";
 
 /// Setup is used to prepare testing MKS client.
 pub fn setup() -> Client {
-    let token = env::var(ENV_X_AUTH_TOKEN)
-        .expect(format!("Failed to read {} environment variable", ENV_X_AUTH_TOKEN).as_str());
-    let base_endpoint = env::var(ENV_MKS_ENDPOINT)
-        .expect(format!("Failed to read {} environment variable", ENV_MKS_ENDPOINT).as_str());
+    let token = env::var(TEST_AUTH_TOKEN)
+        .expect(format!("Failed to read {} environment variable", TEST_AUTH_TOKEN).as_str());
+    let base_endpoint = env::var(TEST_ENDPOINT)
+        .expect(format!("Failed to read {} environment variable", TEST_ENDPOINT).as_str());
     let client = Client::new(base_endpoint.as_str(), token.as_str())
         .expect("Failed to initialize MKS client for tests");
 
@@ -19,20 +19,22 @@ pub fn setup() -> Client {
 
 /// Check if integration tests are enabled.
 pub fn integration_tests_are_enabled() -> bool {
-    let enabled = match env::var(ENV_MKS_INTEGRATION_TESTING) {
+    let enabled = match env::var(TEST_INTEGRATION) {
         Ok(v) => v == "1",
         _ => false,
     };
 
     if enabled {
         println!(
-            "Integration testing is enabled. You can disable it by unsetting MKS_INTEGRATION_TESTING"
+            "Integration testing is enabled. You can disable it by unsetting {} env variable",
+            TEST_INTEGRATION
         );
         return enabled;
     }
 
     println!(
-        "Integration testing is disabled. You can enable it by setting MKS_INTEGRATION_TESTING=1"
+        "Integration testing is disabled. You can enable it by setting env variable {}=1",
+        TEST_INTEGRATION
     );
 
     return false;
