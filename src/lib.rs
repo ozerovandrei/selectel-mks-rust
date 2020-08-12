@@ -7,7 +7,7 @@ use url::Url;
 // Hyper imports.
 use hyper::body::Buf;
 use hyper::header::{HeaderValue, CONTENT_LENGTH, CONTENT_TYPE, USER_AGENT};
-use hyper::{Client, Method, Request};
+use hyper::{Method, Request};
 #[cfg(feature = "rustls")]
 type HttpsConnector = hyper_rustls::HttpsConnector<hyper::client::HttpConnector>;
 #[cfg(feature = "rust-native-tls")]
@@ -24,24 +24,24 @@ pub mod kubeversion;
 static PKG_NAME: &'static str = env!("CARGO_PKG_NAME");
 static PKG_VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
-/// MKS struct is used to make calls to the MKS API.
-pub struct MKS {
-    client: Client<HttpsConnector>,
+/// `Client` struct is used to make calls to the MKS API.
+pub struct Client {
+    client: hyper::Client<HttpsConnector>,
     token: String,
     base_endpoint: url::Url,
     user_agent: String,
     timeout: Duration,
 }
 
-impl MKS {
-    /// Construct the new MKS struct with default configuration.
+impl Client {
+    /// Construct the new Client struct with default configuration.
     ///
     /// Use `Builder` to configure the client.
-    pub fn new(base_endpoint: &str, token: &str) -> Result<MKS, Error> {
-        MKS::with_builder(base_endpoint, token, MKS::builder())
+    pub fn new(base_endpoint: &str, token: &str) -> Result<Client, Error> {
+        Client::with_builder(base_endpoint, token, Client::builder())
     }
 
-    fn with_builder(base_endpoint: &str, token: &str, builder: Builder) -> Result<MKS, Error> {
+    fn with_builder(base_endpoint: &str, token: &str, builder: Builder) -> Result<Client, Error> {
         // Check token.
         if token.is_empty() {
             return Err(Error::EmptyTokenError);
@@ -56,19 +56,19 @@ impl MKS {
             Some(client) => client,
             None => {
                 #[cfg(feature = "rustls")]
-                let client = Client::builder().build(HttpsConnector::new());
+                let client = hyper::Client::builder().build(HttpsConnector::new());
                 #[cfg(feature = "rust-native-tls")]
-                let client = Client::builder().build(HttpsConnector::new()?);
+                let client = hyper::Client::builder().build(HttpsConnector::new()?);
 
                 client
             }
         };
 
-        Ok(MKS {
+        Ok(Client {
             client,
             token,
             base_endpoint,
-            user_agent: MKS::user_agent(),
+            user_agent: Client::user_agent(),
             timeout: builder.timeout,
         })
     }
@@ -172,17 +172,17 @@ impl MKS {
 }
 
 /// Methods to work with Kubernetes versions.
-impl MKS {
+impl Client {
     /// List all Kubernetes versions.
     pub fn list_kube_versions(&self) -> Result<Vec<kubeversion::schemas::KubeVersion>, Error> {
         kubeversion::api::list_kube_versions(self)
     }
 }
 
-/// Builder for `MKS`.
+/// Builder for `Client`.
 pub struct Builder {
     /// Hyper client to use for the connection.
-    client: Option<Client<HttpsConnector>>,
+    client: Option<hyper::Client<HttpsConnector>>,
 
     /// Request timeout.
     timeout: Duration,
@@ -205,7 +205,7 @@ impl Builder {
     ///
     /// By default this library will instantiate a new HttpsConnector.
     /// It will use hyper_rustls or hyper_tls depending on selected library features.
-    pub fn client(mut self, client: Client<HttpsConnector>) -> Self {
+    pub fn client(mut self, client: hyper::Client<HttpsConnector>) -> Self {
         self.client = Some(client);
         self
     }
@@ -218,9 +218,9 @@ impl Builder {
         self
     }
 
-    /// Create `MKS` with the configuration in this builder.
-    pub fn build(self, base_endpoint: &str, token: &str) -> Result<MKS, Error> {
-        MKS::with_builder(base_endpoint, token, self)
+    /// Create `Client` with the configuration in this builder.
+    pub fn build(self, base_endpoint: &str, token: &str) -> Result<Client, Error> {
+        Client::with_builder(base_endpoint, token, self)
     }
 }
 
@@ -236,31 +236,31 @@ mod tests {
     use super::*;
 
     #[test]
-    fn new_mks_default_builder() {
-        let mks = MKS::new("https://example.org", "token_a").unwrap();
+    fn new_client_default_builder() {
+        let client = Client::new("https://example.org", "token_a").unwrap();
 
         assert_eq!(
-            mks.base_endpoint,
+            client.base_endpoint,
             Url::parse("https://example.org").unwrap()
         );
-        assert_eq!(mks.token, String::from("token_a"));
-        assert_eq!(mks.user_agent, format!("{}/{}", PKG_NAME, PKG_VERSION));
-        assert_eq!(mks.timeout, Duration::from_secs(DEFAULT_TIMEOUT));
+        assert_eq!(client.token, String::from("token_a"));
+        assert_eq!(client.user_agent, format!("{}/{}", PKG_NAME, PKG_VERSION));
+        assert_eq!(client.timeout, Duration::from_secs(DEFAULT_TIMEOUT));
     }
 
     #[test]
-    fn new_mks_with_builder() {
-        let mks = MKS::builder()
+    fn new_client_with_builder() {
+        let client = Client::builder()
             .timeout(Duration::from_secs(10))
             .build("https://example.com", "token_b")
             .unwrap();
 
         assert_eq!(
-            mks.base_endpoint,
+            client.base_endpoint,
             Url::parse("https://example.com").unwrap()
         );
-        assert_eq!(mks.token, String::from("token_b"));
-        assert_eq!(mks.user_agent, format!("{}/{}", PKG_NAME, PKG_VERSION));
-        assert_eq!(mks.timeout, Duration::from_secs(10));
+        assert_eq!(client.token, String::from("token_b"));
+        assert_eq!(client.user_agent, format!("{}/{}", PKG_NAME, PKG_VERSION));
+        assert_eq!(client.timeout, Duration::from_secs(10));
     }
 }

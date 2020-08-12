@@ -1,4 +1,4 @@
-use mks::MKS;
+use mks::Client;
 use std::env;
 
 const ENV_X_AUTH_TOKEN: &str = "X_AUTH_TOKEN";
@@ -6,12 +6,12 @@ const ENV_MKS_ENDPOINT: &str = "MKS_ENDPOINT";
 const ENV_MKS_INTEGRATION_TESTING: &str = "MKS_INTEGRATION_TESTING";
 
 /// Setup is used to prepare testing MKS client.
-pub fn setup() -> MKS {
+pub fn setup() -> Client {
     let token = env::var(ENV_X_AUTH_TOKEN)
         .expect(format!("Failed to read {} environment variable", ENV_X_AUTH_TOKEN).as_str());
     let base_endpoint = env::var(ENV_MKS_ENDPOINT)
         .expect(format!("Failed to read {} environment variable", ENV_MKS_ENDPOINT).as_str());
-    let client = MKS::new(base_endpoint.as_str(), token.as_str())
+    let client = Client::new(base_endpoint.as_str(), token.as_str())
         .expect("Failed to initialize MKS client for tests");
 
     client
