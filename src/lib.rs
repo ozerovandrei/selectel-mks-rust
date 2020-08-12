@@ -95,7 +95,7 @@ impl Client {
         // Prepare a new Hyper request.
         let mut req = Request::new(hyper::Body::empty());
         *req.method_mut() = method;
-        *req.uri_mut() = uri.clone();
+        *req.uri_mut() = uri;
 
         // Add user-agent header.
         req.headers_mut().insert(
@@ -131,7 +131,7 @@ impl Client {
     #[tokio::main]
     async fn do_request(&self, req: hyper::Request<hyper::Body>) -> Result<Response, Error> {
         let mut headers = HeaderMap::new();
-        let duration = self.timeout.clone();
+        let duration = self.timeout;
         let handle = async {
             let raw_resp = self.client.request(req).await?;
 
@@ -148,7 +148,7 @@ impl Client {
         let (body, status) = raw_resp;
 
         if !status.is_success() {
-            return Err(Error::HttpError(status.as_u16(), body.to_string()));
+            return Err(Error::HttpError(status.as_u16(), body));
         }
 
         Ok(Response {
