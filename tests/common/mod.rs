@@ -1,4 +1,4 @@
-use mks::Client;
+use selectel_mks::Client;
 use std::env;
 
 const ENV_X_AUTH_TOKEN: &str = "X_AUTH_TOKEN";
