@@ -4,10 +4,10 @@ on:
     branches:
       - master
 
-name: Continuous integration
+name: CI
 
 jobs:
-  ci:
+  check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
