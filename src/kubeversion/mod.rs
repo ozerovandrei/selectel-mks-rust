@@ -1,4 +1,2 @@
-mod api;
-mod schemas;
-
-pub use schemas::{KubeVersion, KubeVersionsRoot};
+pub mod api;
+pub mod schemas;
