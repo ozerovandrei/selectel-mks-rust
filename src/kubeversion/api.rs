@@ -1,5 +1,4 @@
 use hyper::Method;
-use serde_json;
 
 use super::super::error::Error;
 use super::super::resource_url::{API_VERSION, KUBEVERSIONS};
