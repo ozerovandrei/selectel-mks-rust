@@ -1,5 +1,4 @@
 use error::Error;
-use http::{HeaderMap, StatusCode};
 use std::time::Duration;
 use tokio::time::timeout;
 use url::Url;
@@ -129,13 +128,11 @@ impl Client {
     }
 
     #[tokio::main]
-    async fn do_request(&self, req: hyper::Request<hyper::Body>) -> Result<Response, Error> {
-        let mut headers = HeaderMap::new();
+    async fn do_request(&self, req: hyper::Request<hyper::Body>) -> Result<String, Error> {
         let duration = self.timeout;
         let handle = async {
             let raw_resp = self.client.request(req).await?;
 
-            headers = raw_resp.headers().clone();
             let status = raw_resp.status();
             let body = hyper::body::aggregate(raw_resp).await?.to_bytes();
             let body = String::from_utf8_lossy(&body);
@@ -151,11 +148,7 @@ impl Client {
             return Err(Error::HttpError(status.as_u16(), body));
         }
 
-        Ok(Response {
-            status,
-            headers,
-            body,
-        })
+        Ok(body)
     }
 
     fn make_uri(&self, path: &str) -> Result<hyper::Uri, Error> {
@@ -222,13 +215,6 @@ impl Builder {
     pub fn build(self, base_endpoint: &str, token: &str) -> Result<Client, Error> {
         Client::with_builder(base_endpoint, token, self)
     }
-}
-
-/// Response represents a result of an HTTP request.
-struct Response {
-    status: StatusCode,
-    headers: HeaderMap,
-    body: String,
 }
 
 #[cfg(test)]
