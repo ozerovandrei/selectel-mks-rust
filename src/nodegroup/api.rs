@@ -21,3 +21,21 @@ pub fn list_nodegroups(
 
     Ok(deserialized.nodegroups)
 }
+
+pub fn get_nodegroup(
+    client: &Client,
+    cluster_id: &str,
+    nodegroup_id: &str,
+) -> Result<schemas::Nodegroup, Error> {
+    let path = format!(
+        "/{}/{}/{}/{}/{}",
+        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
+    );
+    let req = client.new_request(Method::GET, path.as_str(), None)?;
+    let body = client.do_request(req)?;
+
+    let deserialized: schemas::NodegroupRoot =
+        serde_json::from_str(body.as_str()).map_err(|err| Error::DeserializeError(err, body))?;
+
+    Ok(deserialized.nodegroup)
+}
