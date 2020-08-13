@@ -201,6 +201,11 @@ impl Client {
     ) -> Result<(), Error> {
         nodegroup::api::create_nodegroup(self, cluster_id, opts)
     }
+
+    /// Delete a cluster nodegroup.
+    pub fn delete_nodegroup(&self, cluster_id: &str, nodegroup_id: &str) -> Result<(), Error> {
+        nodegroup::api::delete_nodegroup(self, cluster_id, nodegroup_id)
+    }
 }
 
 /// Builder for `Client`.
