@@ -1,9 +1,10 @@
 use selectel_mks::Client;
 use std::env;
 
+const TEST_INTEGRATION: &str = "MKS_TEST_INTEGRATION";
+
 const TEST_AUTH_TOKEN: &str = "MKS_TEST_AUTH_TOKEN";
 const TEST_ENDPOINT: &str = "MKS_TEST_ENDPOINT";
-const TEST_INTEGRATION: &str = "MKS_TEST_INTEGRATION";
 
 /// Setup is used to prepare testing MKS client.
 pub fn setup() -> Client {

@@ -18,6 +18,8 @@ pub mod error;
 pub mod resource_url;
 
 pub mod kubeversion;
+pub mod node;
+pub mod nodegroup;
 
 // Environment variables from Cargo.
 static PKG_NAME: &str = env!("CARGO_PKG_NAME");
@@ -169,6 +171,17 @@ impl Client {
     /// List all Kubernetes versions.
     pub fn list_kube_versions(&self) -> Result<Vec<kubeversion::schemas::KubeVersion>, Error> {
         kubeversion::api::list_kube_versions(self)
+    }
+}
+
+/// Methods to work with nodegroups.
+impl Client {
+    /// List cluster nodegroups.
+    pub fn list_nodegroups(
+        &self,
+        cluster_id: &str,
+    ) -> Result<Vec<nodegroup::schemas::Nodegroup>, Error> {
+        nodegroup::api::list_nodegroups(self, cluster_id)
     }
 }
 

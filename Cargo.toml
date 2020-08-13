@@ -17,6 +17,7 @@ rustls = ["hyper-rustls"]
 rust-native-tls = ["native-tls", "hyper-tls"]
 
 [dependencies]
+chrono = { version = "^0.4", features = ["serde"] }
 hyper = "^0.13"
 hyper-rustls = { version = "^0.21", optional = true }
 hyper-tls = { version = "^0.4", optional = true }
