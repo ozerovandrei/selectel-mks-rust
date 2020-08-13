@@ -183,6 +183,15 @@ impl Client {
     ) -> Result<Vec<nodegroup::schemas::Nodegroup>, Error> {
         nodegroup::api::list_nodegroups(self, cluster_id)
     }
+
+    /// Get a cluster nodegroup.
+    pub fn get_nodegroup(
+        &self,
+        cluster_id: &str,
+        nodegroup_id: &str,
+    ) -> Result<nodegroup::schemas::Nodegroup, Error> {
+        nodegroup::api::get_nodegroup(self, cluster_id, nodegroup_id)
+    }
 }
 
 /// Builder for `Client`.

@@ -8,40 +8,46 @@ use super::super::node::schemas::Node;
 #[derive(Debug, Deserialize)]
 pub struct Nodegroup {
     // Nodegroup identifier.
-    id: String,
+    pub id: String,
 
     // Timestamp in UTC timezone of when the nodegroup has been created.
-    created_at: DateTime<Utc>,
+    pub created_at: DateTime<Utc>,
 
     // Timestamp in UTC timezone of when the nodegroup has been updated.
-    updated_at: Option<DateTime<Utc>>,
+    pub updated_at: Option<DateTime<Utc>>,
 
     // Cluster identifier.
-    cluster_id: String,
+    pub cluster_id: String,
 
     // OpenStack flavor identifier for all nodes in the nodegroup.
-    flavor_id: String,
+    pub flavor_id: String,
 
     // Initial volume size in GB for each node.
-    volume_gb: u32,
+    pub volume_gb: u32,
 
     // Initial blockstorage volume type for each node.
-    volume_type: String,
+    pub volume_type: String,
 
     // Flag that represents if nodes use local volume.
-    local_volume: bool,
+    pub local_volume: bool,
 
     // OpenStack availability zone for all nodes in the nodegroup.
-    availability_zone: String,
+    pub availability_zone: String,
 
     // All nodes in the nodegroup.
-    nodes: Vec<Node>,
+    pub nodes: Vec<Node>,
 
     // A map of user-defined Kubernetes labels for each node in the group.
-    labels: HashMap<String, String>,
+    pub labels: HashMap<String, String>,
 }
 
-/// NodegroupsRoot represents a list of deserialized nodegroups.
+/// NodegroupRoot represents a root of a deserialized nodegroup.
+#[derive(Debug, Deserialize)]
+pub struct NodegroupRoot {
+    pub nodegroup: Nodegroup,
+}
+
+/// NodegroupsRoot represents a root of a list with deserialized nodegroups.
 #[derive(Debug, Deserialize)]
 pub struct NodegroupsRoot {
     pub nodegroups: Vec<Nodegroup>,
