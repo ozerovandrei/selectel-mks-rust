@@ -206,6 +206,16 @@ impl Client {
     pub fn delete_nodegroup(&self, cluster_id: &str, nodegroup_id: &str) -> Result<(), Error> {
         nodegroup::api::delete_nodegroup(self, cluster_id, nodegroup_id)
     }
+
+    /// Resize a cluster nodegroup.
+    pub fn resize_nodegroup(
+        &self,
+        cluster_id: &str,
+        nodegroup_id: &str,
+        opts: &nodegroup::schemas::NodegroupResizeOpts,
+    ) -> Result<(), Error> {
+        nodegroup::api::resize_nodegroup(self, cluster_id, nodegroup_id, opts)
+    }
 }
 
 /// Builder for `Client`.

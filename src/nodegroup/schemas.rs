@@ -146,3 +146,16 @@ impl NodegroupCreateOpts {
 pub struct NodegroupCreateOptsRoot<'a> {
     pub nodegroup: &'a NodegroupCreateOpts,
 }
+
+/// NodegroupResizeOpts represents a nodegroup resize options for the API resize request.
+#[derive(Debug, Serialize)]
+pub struct NodegroupResizeOpts {
+    desired: u32,
+}
+
+impl NodegroupResizeOpts {
+    // Initialize a new NodegroupResizeOpts.
+    pub fn new(desired: u32) -> NodegroupResizeOpts {
+        NodegroupResizeOpts { desired }
+    }
+}

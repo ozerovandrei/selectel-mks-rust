@@ -73,3 +73,21 @@ pub fn delete_nodegroup(
 
     Ok(())
 }
+
+pub fn resize_nodegroup(
+    client: &Client,
+    cluster_id: &str,
+    nodegroup_id: &str,
+    opts: &schemas::NodegroupResizeOpts,
+) -> Result<(), Error> {
+    let serialized = serde_json::to_string(&opts).map_err(Error::SerializeError)?;
+
+    let path = format!(
+        "/{}/{}/{}/{}/{}",
+        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
+    );
+    let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
+    client.do_request(req)?;
+
+    Ok(())
+}
