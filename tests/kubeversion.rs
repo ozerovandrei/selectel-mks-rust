@@ -1,4 +1,4 @@
-mod common;
+pub mod common;
 
 #[test]
 fn list_kubeversions() {
@@ -12,5 +12,5 @@ fn list_kubeversions() {
         .expect("Failed to list Kubernetes versions");
 
     assert!(!kube_versions.is_empty());
-    println!("Kubernetes versions: {:?}", kube_versions);
+    println!("Kubernetes versions: {:?}\n", kube_versions);
 }
