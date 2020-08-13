@@ -192,6 +192,15 @@ impl Client {
     ) -> Result<nodegroup::schemas::Nodegroup, Error> {
         nodegroup::api::get_nodegroup(self, cluster_id, nodegroup_id)
     }
+
+    /// Create a cluster nodegroup.
+    pub fn create_nodegroup(
+        &self,
+        cluster_id: &str,
+        opts: &nodegroup::schemas::NodegroupCreateOpts,
+    ) -> Result<(), Error> {
+        nodegroup::api::create_nodegroup(self, cluster_id, opts)
+    }
 }
 
 /// Builder for `Client`.
