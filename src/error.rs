@@ -4,6 +4,9 @@ pub enum Error {
     /// Failed to deserialize response body.
     DeserializeError(serde_json::Error, String),
 
+    /// Failed to serialize a struct into request body.
+    SerializeError(serde_json::Error),
+
     /// Bad endpoint value.
     EndpointError,
 
@@ -31,6 +34,9 @@ impl std::fmt::Display for Error {
         match &*self {
             Error::DeserializeError(err, body) => {
                 format!("failed to deserialize body: {}, error: {}", err, body).fmt(f)
+            }
+            Error::SerializeError(err) => {
+                format!("failed to serialize a struct, error: {}", err).fmt(f)
             }
             Error::EndpointError => "failed to parse base endpoint URL".fmt(f),
             Error::EmptyTokenError => "token cannot be empty".fmt(f),
