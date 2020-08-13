@@ -6,6 +6,9 @@ const TEST_INTEGRATION: &str = "MKS_TEST_INTEGRATION";
 const TEST_AUTH_TOKEN: &str = "MKS_TEST_AUTH_TOKEN";
 const TEST_ENDPOINT: &str = "MKS_TEST_ENDPOINT";
 
+pub const TEST_CLUSTER_ID: &str = "MKS_TEST_CLUSTER_ID";
+pub const TEST_NODEGROUP_ID: &str = "MKS_TEST_NODEGROUP_ID";
+
 /// Setup is used to prepare testing MKS client.
 pub fn setup() -> Client {
     let token = env::var(TEST_AUTH_TOKEN)
