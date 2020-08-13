@@ -58,3 +58,18 @@ pub fn create_nodegroup(
 
     Ok(())
 }
+
+pub fn delete_nodegroup(
+    client: &Client,
+    cluster_id: &str,
+    nodegroup_id: &str,
+) -> Result<(), Error> {
+    let path = format!(
+        "/{}/{}/{}/{}/{}",
+        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
+    );
+    let req = client.new_request(Method::DELETE, path.as_str(), None)?;
+    client.do_request(req)?;
+
+    Ok(())
+}
