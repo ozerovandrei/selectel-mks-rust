@@ -25,6 +25,33 @@ pub enum Status {
     Unknown,
 }
 
+impl std::fmt::Display for Status {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match *self {
+            Status::Active => "ACTIVE".fmt(f),
+            Status::PendingCreate => "PENDING_CREATE".fmt(f),
+            Status::PendingUpdate => "PENDING_UPDATE".fmt(f),
+            Status::PendingUpgrade => "PENDING_UPGRADE".fmt(f),
+            Status::PendingRotateCerts => "PENDING_ROTATE_CERTS".fmt(f),
+            Status::PendingDelete => "PENDING_DELETE".fmt(f),
+            Status::PendingResize => "PENDING_RESIZE".fmt(f),
+            Status::PendingNodeReinstall => "PENDING_NODE_REINSTALL".fmt(f),
+            Status::PendingUpgradePatchVersion => "PENDING_UPGRADE_PATCH_VERSION".fmt(f),
+            Status::PendingUpgradeMinorVersion => "PENDING_UPGRADE_MINOR_VERSION".fmt(f),
+            Status::PendingUpdateNodegroup => "PENDING_UPDATE_NODEGROUP".fmt(f),
+            Status::PendingUpgradeMastersConfiguration => {
+                "PENDING_UPGRADE_MASTERS_CONFIGURATION".fmt(f)
+            }
+            Status::PendingUpgradeClusterConfiguration => {
+                "PENDING_UPGRADE_CLUSTER_CONFIGURATION".fmt(f)
+            }
+            Status::Maintenance => "MAINTENANCE".fmt(f),
+            Status::Error => "ERROR".fmt(f),
+            Status::Unknown => "UNKNOWN".fmt(f),
+        }
+    }
+}
+
 /// Cluster represents a deserialized cluster body from an API response.
 #[derive(Deserialize, Debug)]
 pub struct Cluster {
