@@ -281,7 +281,7 @@ impl Builder {
     ///
     /// By default this library will instantiate a new HttpsConnector.
     /// It will use hyper_rustls or hyper_tls depending on selected library features.
-    pub fn client(mut self, client: hyper::Client<HttpsConnector>) -> Self {
+    pub fn with_client(mut self, client: hyper::Client<HttpsConnector>) -> Self {
         self.client = Some(client);
         self
     }
@@ -289,7 +289,7 @@ impl Builder {
     /// Set request timeout.
     ///
     /// Default is 30 seconds.
-    pub fn timeout(mut self, timeout: Duration) -> Self {
+    pub fn with_timeout(mut self, timeout: Duration) -> Self {
         self.timeout = timeout;
         self
     }
@@ -320,7 +320,7 @@ mod tests {
     #[test]
     fn new_client_with_builder() {
         let client = Client::builder()
-            .timeout(Duration::from_secs(10))
+            .with_timeout(Duration::from_secs(10))
             .build("https://example.com", "token_b")
             .unwrap();
 
