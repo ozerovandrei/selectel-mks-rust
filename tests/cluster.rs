@@ -24,3 +24,16 @@ fn get_cluster() {
     assert_eq!(cluster.id, cluster_id);
     println!("Cluster: {:?}\n", cluster);
 }
+
+#[test]
+fn list_clusters() {
+    if !common::integration_tests_are_enabled() {
+        return;
+    }
+
+    let client = common::setup();
+    let clusters = client.list_clusters().expect("Failed to list clusters");
+
+    assert!(!clusters.is_empty());
+    println!("Clusters: {:?}\n", clusters);
+}
