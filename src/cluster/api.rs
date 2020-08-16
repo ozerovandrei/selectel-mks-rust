@@ -43,3 +43,11 @@ pub fn create_cluster(
 
     Ok(deserialized.cluster)
 }
+
+pub fn delete_cluster(client: &Client, cluster_id: &str) -> Result<(), Error> {
+    let path = format!("/{}/{}/{}", API_VERSION, CLUSTERS, cluster_id);
+    let req = client.new_request(Method::DELETE, path.as_str(), None)?;
+    client.do_request(req)?;
+
+    Ok(())
+}
