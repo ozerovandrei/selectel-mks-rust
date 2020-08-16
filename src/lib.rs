@@ -235,6 +235,11 @@ impl Client {
     pub fn get_cluster(&self, cluster_id: &str) -> Result<cluster::schemas::Cluster, Error> {
         cluster::api::get_cluster(self, cluster_id)
     }
+
+    /// List clusters.
+    pub fn list_clusters(&self) -> Result<Vec<cluster::schemas::Cluster>, Error> {
+        cluster::api::list_clusters(self)
+    }
 }
 
 /// Builder for `Client`.

@@ -15,3 +15,14 @@ pub fn get_cluster(client: &Client, cluster_id: &str) -> Result<schemas::Cluster
 
     Ok(deserialized.cluster)
 }
+
+pub fn list_clusters(client: &Client) -> Result<Vec<schemas::Cluster>, Error> {
+    let path = format!("/{}/{}", API_VERSION, CLUSTERS);
+    let req = client.new_request(Method::GET, path.as_str(), None)?;
+    let body = client.do_request(req)?;
+
+    let deserialized: schemas::ListRoot =
+        serde_json::from_str(body.as_str()).map_err(|err| Error::DeserializeError(err, body))?;
+
+    Ok(deserialized.clusters)
+}

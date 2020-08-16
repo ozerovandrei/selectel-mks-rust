@@ -64,14 +64,14 @@ pub struct Cluster {
 
     /// UTC time in "hh:mm:ss" format of when the cluster will start its
     /// maintenance tasks.
-    pub maintenance_window_start: String,
+    pub maintenance_window_start: Option<String>,
 
     /// UTC time in "hh:mm:ss" format of when the cluster will end its
     /// maintenance tasks.
-    pub maintenance_window_end: String,
+    pub maintenance_window_end: Option<String>,
 
     /// Timestamp in UTC timezone of the last cluster maintenance start.
-    pub maintenance_last_start: DateTime<Utc>,
+    pub maintenance_last_start: Option<DateTime<Utc>>,
 
     /// Flag that indicates if worker nodes are allowed to be reinstalled automatically
     /// in case of their unavailability or unhealthiness.
@@ -94,6 +94,12 @@ pub struct Cluster {
 #[derive(Debug, Deserialize)]
 pub struct ClusterRoot {
     pub cluster: Cluster,
+}
+
+/// ListRoot represents a root of a list with deserialized clusters.
+#[derive(Debug, Deserialize)]
+pub struct ListRoot {
+    pub clusters: Vec<Cluster>,
 }
 
 /// KubernetesOptions represents additional Kubernetes-related options
