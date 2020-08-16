@@ -240,6 +240,14 @@ impl Client {
     pub fn list_clusters(&self) -> Result<Vec<cluster::schemas::Cluster>, Error> {
         cluster::api::list_clusters(self)
     }
+
+    /// Create a cluster.
+    pub fn create_cluster(
+        &self,
+        opts: &cluster::schemas::CreateOpts,
+    ) -> Result<cluster::schemas::Cluster, Error> {
+        cluster::api::create_cluster(self, opts)
+    }
 }
 
 /// Builder for `Client`.
