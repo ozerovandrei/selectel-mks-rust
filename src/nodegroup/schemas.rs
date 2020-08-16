@@ -159,3 +159,34 @@ impl NodegroupResizeOpts {
         NodegroupResizeOpts { desired }
     }
 }
+
+/// NodegroupUpdateOpts represents a nodegroup update options for the API update request.
+#[derive(Debug, Serialize)]
+pub struct NodegroupUpdateOpts {
+    labels: Option<HashMap<String, String>>,
+}
+
+impl NodegroupUpdateOpts {
+    // Initialize a new NodegroupUpdateOpts.
+    pub fn new() -> NodegroupUpdateOpts {
+        NodegroupUpdateOpts { labels: None }
+    }
+
+    // Update user-defined Kubernetes labels for each node in the group.
+    pub fn with_labels(mut self, labels: HashMap<String, String>) -> NodegroupUpdateOpts {
+        self.labels = Some(labels);
+        self
+    }
+}
+
+impl Default for NodegroupUpdateOpts {
+    fn default() -> Self {
+        NodegroupUpdateOpts::new()
+    }
+}
+
+/// NodegroupUpdateOptsRoot represents a root of a nodegroup update options.
+#[derive(Debug, Serialize)]
+pub struct NodegroupUpdateOptsRoot<'a> {
+    pub nodegroup: &'a NodegroupUpdateOpts,
+}

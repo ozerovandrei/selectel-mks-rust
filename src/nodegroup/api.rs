@@ -4,7 +4,7 @@ use super::super::error::Error;
 use super::super::resource_url::{API_VERSION, CLUSTERS, NODEGROUPS};
 use super::super::Client;
 use super::schemas;
-use crate::nodegroup::schemas::NodegroupCreateOptsRoot;
+use crate::nodegroup::schemas::{NodegroupCreateOptsRoot, NodegroupUpdateOptsRoot};
 
 pub fn list_nodegroups(
     client: &Client,
@@ -81,6 +81,25 @@ pub fn resize_nodegroup(
     opts: &schemas::NodegroupResizeOpts,
 ) -> Result<(), Error> {
     let serialized = serde_json::to_string(&opts).map_err(Error::SerializeError)?;
+
+    let path = format!(
+        "/{}/{}/{}/{}/{}",
+        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
+    );
+    let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
+    client.do_request(req)?;
+
+    Ok(())
+}
+
+pub fn update_nodegroup(
+    client: &Client,
+    cluster_id: &str,
+    nodegroup_id: &str,
+    opts: &schemas::NodegroupUpdateOpts,
+) -> Result<(), Error> {
+    let root_opts = NodegroupUpdateOptsRoot { nodegroup: opts };
+    let serialized = serde_json::to_string(&root_opts).map_err(Error::SerializeError)?;
 
     let path = format!(
         "/{}/{}/{}/{}/{}",

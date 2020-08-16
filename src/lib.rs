@@ -216,6 +216,16 @@ impl Client {
     ) -> Result<(), Error> {
         nodegroup::api::resize_nodegroup(self, cluster_id, nodegroup_id, opts)
     }
+
+    /// Update a cluster nodegroup.
+    pub fn update_nodegroup(
+        &self,
+        cluster_id: &str,
+        nodegroup_id: &str,
+        opts: &nodegroup::schemas::NodegroupUpdateOpts,
+    ) -> Result<(), Error> {
+        nodegroup::api::update_nodegroup(self, cluster_id, nodegroup_id, opts)
+    }
 }
 
 /// Builder for `Client`.
