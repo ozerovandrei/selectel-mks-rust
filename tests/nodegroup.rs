@@ -1,4 +1,4 @@
-use selectel_mks::nodegroup::schemas::NodegroupCreateOpts;
+use selectel_mks::nodegroup::schemas::CreateOpts;
 use std::env;
 
 pub mod common;
@@ -78,7 +78,7 @@ fn create_nodegroup() {
         .as_str(),
     );
 
-    let opts = NodegroupCreateOpts::new(2, false, az.clone())
+    let opts = CreateOpts::new(2, false, az.clone())
         .with_cpus(1)
         .with_ram_mb(1024)
         .with_volume_gb(10)
