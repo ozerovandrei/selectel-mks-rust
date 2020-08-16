@@ -177,14 +177,6 @@ impl Client {
 
 /// Methods to work with nodegroups.
 impl Client {
-    /// List cluster nodegroups.
-    pub fn list_nodegroups(
-        &self,
-        cluster_id: &str,
-    ) -> Result<Vec<nodegroup::schemas::Nodegroup>, Error> {
-        nodegroup::api::list_nodegroups(self, cluster_id)
-    }
-
     /// Get a cluster nodegroup.
     pub fn get_nodegroup(
         &self,
@@ -194,11 +186,19 @@ impl Client {
         nodegroup::api::get_nodegroup(self, cluster_id, nodegroup_id)
     }
 
+    /// List cluster nodegroups.
+    pub fn list_nodegroups(
+        &self,
+        cluster_id: &str,
+    ) -> Result<Vec<nodegroup::schemas::Nodegroup>, Error> {
+        nodegroup::api::list_nodegroups(self, cluster_id)
+    }
+
     /// Create a cluster nodegroup.
     pub fn create_nodegroup(
         &self,
         cluster_id: &str,
-        opts: &nodegroup::schemas::NodegroupCreateOpts,
+        opts: &nodegroup::schemas::CreateOpts,
     ) -> Result<(), Error> {
         nodegroup::api::create_nodegroup(self, cluster_id, opts)
     }
@@ -213,7 +213,7 @@ impl Client {
         &self,
         cluster_id: &str,
         nodegroup_id: &str,
-        opts: &nodegroup::schemas::NodegroupResizeOpts,
+        opts: &nodegroup::schemas::ResizeOpts,
     ) -> Result<(), Error> {
         nodegroup::api::resize_nodegroup(self, cluster_id, nodegroup_id, opts)
     }
@@ -223,7 +223,7 @@ impl Client {
         &self,
         cluster_id: &str,
         nodegroup_id: &str,
-        opts: &nodegroup::schemas::NodegroupUpdateOpts,
+        opts: &nodegroup::schemas::UpdateOpts,
     ) -> Result<(), Error> {
         nodegroup::api::update_nodegroup(self, cluster_id, nodegroup_id, opts)
     }

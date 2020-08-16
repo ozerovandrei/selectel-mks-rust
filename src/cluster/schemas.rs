@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use super::super::nodegroup::schemas::NodegroupCreateOpts;
+use super::super::nodegroup;
 
 /// Status represents a enum with various cluster statuses.
 #[derive(Deserialize, Debug)]
@@ -121,7 +121,7 @@ pub struct CreateOpts {
     subnet_id: Option<String>,
     kube_version: String,
     region: String,
-    nodegroups: Option<Vec<NodegroupCreateOpts>>,
+    nodegroups: Option<Vec<nodegroup::schemas::CreateOpts>>,
     maintenance_window_start: Option<String>,
     enable_autorepair: Option<bool>,
     enable_patch_version_auto_upgrade: Option<bool>,
@@ -159,7 +159,10 @@ impl CreateOpts {
     }
 
     /// Add nodegroups parameters.
-    pub fn with_nodegroups(mut self, nodegroups: Vec<NodegroupCreateOpts>) -> CreateOpts {
+    pub fn with_nodegroups(
+        mut self,
+        nodegroups: Vec<nodegroup::schemas::CreateOpts>,
+    ) -> CreateOpts {
         self.nodegroups = Some(nodegroups);
         self
     }
