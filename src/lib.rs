@@ -17,6 +17,7 @@ type HttpsConnector = hyper_tls::HttpsConnector<hyper::client::HttpConnector>;
 pub mod error;
 pub mod resource_url;
 
+pub mod cluster;
 pub mod kubeversion;
 pub mod node;
 pub mod nodegroup;
@@ -225,6 +226,14 @@ impl Client {
         opts: &nodegroup::schemas::NodegroupUpdateOpts,
     ) -> Result<(), Error> {
         nodegroup::api::update_nodegroup(self, cluster_id, nodegroup_id, opts)
+    }
+}
+
+/// Methods to work with clusters.
+impl Client {
+    /// Get a cluster.
+    pub fn get_cluster(&self, cluster_id: &str) -> Result<cluster::schemas::Cluster, Error> {
+        cluster::api::get_cluster(self, cluster_id)
     }
 }
 
