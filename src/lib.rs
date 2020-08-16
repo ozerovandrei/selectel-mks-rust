@@ -248,6 +248,11 @@ impl Client {
     ) -> Result<cluster::schemas::Cluster, Error> {
         cluster::api::create_cluster(self, opts)
     }
+
+    /// Delete a cluster.
+    pub fn delete_cluster(&self, cluster_id: &str) -> Result<(), Error> {
+        cluster::api::delete_cluster(self, cluster_id)
+    }
 }
 
 /// Builder for `Client`.
