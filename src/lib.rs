@@ -167,11 +167,50 @@ impl Client {
     }
 }
 
+/// Methods to work with clusters.
+impl Client {
+    /// Get a cluster.
+    pub fn get_cluster(&self, cluster_id: &str) -> Result<cluster::schemas::Cluster, Error> {
+        cluster::api::get_cluster(self, cluster_id)
+    }
+
+    /// List clusters.
+    pub fn list_clusters(&self) -> Result<Vec<cluster::schemas::Cluster>, Error> {
+        cluster::api::list_clusters(self)
+    }
+
+    /// Create a cluster.
+    pub fn create_cluster(
+        &self,
+        opts: &cluster::schemas::CreateOpts,
+    ) -> Result<cluster::schemas::Cluster, Error> {
+        cluster::api::create_cluster(self, opts)
+    }
+
+    /// Delete a cluster.
+    pub fn delete_cluster(&self, cluster_id: &str) -> Result<(), Error> {
+        cluster::api::delete_cluster(self, cluster_id)
+    }
+}
+
 /// Methods to work with Kubernetes versions.
 impl Client {
     /// List all Kubernetes versions.
     pub fn list_kube_versions(&self) -> Result<Vec<kubeversion::schemas::KubeVersion>, Error> {
         kubeversion::api::list_kube_versions(self)
+    }
+}
+
+/// Methods to work with nodes.
+impl Client {
+    /// Get a cluster node.
+    pub fn get_node(
+        &self,
+        cluster_id: &str,
+        nodegroup_id: &str,
+        node_id: &str,
+    ) -> Result<node::schemas::Node, Error> {
+        node::api::get_node(self, cluster_id, nodegroup_id, node_id)
     }
 }
 
@@ -226,32 +265,6 @@ impl Client {
         opts: &nodegroup::schemas::UpdateOpts,
     ) -> Result<(), Error> {
         nodegroup::api::update_nodegroup(self, cluster_id, nodegroup_id, opts)
-    }
-}
-
-/// Methods to work with clusters.
-impl Client {
-    /// Get a cluster.
-    pub fn get_cluster(&self, cluster_id: &str) -> Result<cluster::schemas::Cluster, Error> {
-        cluster::api::get_cluster(self, cluster_id)
-    }
-
-    /// List clusters.
-    pub fn list_clusters(&self) -> Result<Vec<cluster::schemas::Cluster>, Error> {
-        cluster::api::list_clusters(self)
-    }
-
-    /// Create a cluster.
-    pub fn create_cluster(
-        &self,
-        opts: &cluster::schemas::CreateOpts,
-    ) -> Result<cluster::schemas::Cluster, Error> {
-        cluster::api::create_cluster(self, opts)
-    }
-
-    /// Delete a cluster.
-    pub fn delete_cluster(&self, cluster_id: &str) -> Result<(), Error> {
-        cluster::api::delete_cluster(self, cluster_id)
     }
 }
 
