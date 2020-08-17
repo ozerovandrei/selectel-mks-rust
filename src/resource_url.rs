@@ -10,3 +10,6 @@ pub const KUBEVERSIONS: &str = "kubeversions";
 /// Nodegroups resource URLs.
 pub const NODEGROUPS: &str = "nodegroups";
 pub const RESIZE: &str = "resize";
+
+/// Nodes resource URLs.
+pub const REINSTALL: &str = "reinstall";

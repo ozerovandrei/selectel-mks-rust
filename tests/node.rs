@@ -43,6 +43,14 @@ fn node_crud() {
         .expect("failed to get cluster node");
     println!("Node: {:?}\n", node);
 
+    // Reinstall the first node.
+    common::node_common::reinstall_node_or_panic(
+        &client,
+        &cluster.id,
+        &nodegroups[0].id,
+        &nodegroups[0].nodes[0].id,
+    );
+
     // Delete the created cluster.
     common::cluster_common::delete_cluster_or_panic(&client, &cluster.id);
 }

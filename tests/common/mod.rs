@@ -1,4 +1,5 @@
 pub mod cluster_common;
+pub mod node_common;
 pub mod nodegroup_common;
 
 use selectel_mks::Client;
