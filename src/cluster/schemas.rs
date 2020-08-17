@@ -157,13 +157,13 @@ pub struct CreateOpts {
 }
 
 impl CreateOpts {
-    pub fn new(name: String, kube_version: String, region: String) -> CreateOpts {
+    pub fn new(name: &str, kube_version: &str, region: &str) -> CreateOpts {
         CreateOpts {
-            name,
+            name: String::from(name),
             network_id: None,
             subnet_id: None,
-            kube_version,
-            region,
+            kube_version: String::from(kube_version),
+            region: String::from(region),
             nodegroups: None,
             maintenance_window_start: None,
             enable_autorepair: None,
@@ -174,14 +174,14 @@ impl CreateOpts {
     }
 
     /// Add a reference to a pre-created network.
-    pub fn with_network_id(mut self, network_id: String) -> CreateOpts {
-        self.network_id = Some(network_id);
+    pub fn with_network_id(mut self, network_id: &str) -> CreateOpts {
+        self.network_id = Some(String::from(network_id));
         self
     }
 
     /// Add a reference to a pre-created subnet.
-    pub fn with_subnet_id(mut self, subnet_id: String) -> CreateOpts {
-        self.subnet_id = Some(subnet_id);
+    pub fn with_subnet_id(mut self, subnet_id: &str) -> CreateOpts {
+        self.subnet_id = Some(String::from(subnet_id));
         self
     }
 
@@ -196,8 +196,8 @@ impl CreateOpts {
 
     /// Add maintenance_window_start in UTC.
     /// It should be in hh:mm:ss format.
-    pub fn with_maintenance_window_start(mut self, maintenance_window_start: String) -> CreateOpts {
-        self.maintenance_window_start = Some(maintenance_window_start);
+    pub fn with_maintenance_window_start(mut self, maintenance_window_start: &str) -> CreateOpts {
+        self.maintenance_window_start = Some(String::from(maintenance_window_start));
         self
     }
 
