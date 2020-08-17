@@ -158,6 +158,12 @@ impl ResizeOpts {
     }
 }
 
+/// ResizeOptsRoot represents a root of nodegroup resize options.
+#[derive(Debug, Serialize)]
+pub struct ResizeOptsRoot<'a> {
+    pub nodegroup: &'a ResizeOpts,
+}
+
 /// Options for the nodegroup update operation.
 #[derive(Debug, Serialize)]
 pub struct UpdateOpts {

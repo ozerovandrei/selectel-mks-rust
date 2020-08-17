@@ -79,7 +79,8 @@ pub fn resize_nodegroup(
     nodegroup_id: &str,
     opts: &schemas::ResizeOpts,
 ) -> Result<(), Error> {
-    let serialized = serde_json::to_string(&opts).map_err(Error::SerializeError)?;
+    let root_opts = schemas::ResizeOptsRoot { nodegroup: opts };
+    let serialized = serde_json::to_string(&root_opts).map_err(Error::SerializeError)?;
 
     let path = format!(
         "/{}/{}/{}/{}/{}/{}",
