@@ -21,6 +21,7 @@ pub mod cluster;
 pub mod kubeversion;
 pub mod node;
 pub mod nodegroup;
+pub mod task;
 
 // Environment variables from Cargo.
 static PKG_NAME: &str = env!("CARGO_PKG_NAME");
@@ -275,6 +276,19 @@ impl Client {
         opts: &nodegroup::schemas::UpdateOpts,
     ) -> Result<(), Error> {
         nodegroup::api::update_nodegroup(self, cluster_id, nodegroup_id, opts)
+    }
+}
+
+/// Methods to work with tasks.
+impl Client {
+    /// Get a task.
+    pub fn get_task(&self, cluster_id: &str, task_id: &str) -> Result<task::schemas::Task, Error> {
+        task::api::get_task(self, cluster_id, task_id)
+    }
+
+    /// List tasks.
+    pub fn list_tasks(&self, cluster_id: &str) -> Result<Vec<task::schemas::Task>, Error> {
+        task::api::list_tasks(self, cluster_id)
     }
 }
 

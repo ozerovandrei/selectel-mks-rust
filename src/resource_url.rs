@@ -13,3 +13,6 @@ pub const RESIZE: &str = "resize";
 
 /// Nodes resource URLs.
 pub const REINSTALL: &str = "reinstall";
+
+/// Tasks resource URLs.
+pub const TASKS: &str = "tasks";
