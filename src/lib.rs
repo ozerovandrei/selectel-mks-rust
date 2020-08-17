@@ -102,13 +102,13 @@ impl Client {
         // Add user-agent header.
         req.headers_mut().insert(
             USER_AGENT,
-            HeaderValue::from_str(self.user_agent.as_str()).map_err(|_| Error::RequestError)?,
+            HeaderValue::from_str(&self.user_agent).map_err(|_| Error::RequestError)?,
         );
 
         // Add x-auth-token header.
         req.headers_mut().insert(
             "x-auth-token",
-            HeaderValue::from_str(self.token.as_str()).map_err(|_| Error::RequestError)?,
+            HeaderValue::from_str(&self.token).map_err(|_| Error::RequestError)?,
         );
 
         // Add body into the new request if it's provided.

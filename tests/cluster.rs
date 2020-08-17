@@ -16,8 +16,8 @@ fn cluster_crud() {
     let client = common::setup();
 
     // Prepare create options.
-    let name = "cluster-crud".to_string();
-    let create_opts = cluster::schemas::CreateOpts::new(name, kube_version, region);
+    let name = "cluster-crud";
+    let create_opts = cluster::schemas::CreateOpts::new(name, &kube_version, &region);
 
     // Create a new cluster.
     let cluster = common::cluster_common::create_cluster_or_panic(&client, &create_opts);

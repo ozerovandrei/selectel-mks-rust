@@ -70,7 +70,7 @@ pub struct CreateOpts {
 }
 
 impl CreateOpts {
-    pub fn new(count: u32, local_volume: bool, availability_zone: String) -> CreateOpts {
+    pub fn new(count: u32, local_volume: bool, availability_zone: &str) -> CreateOpts {
         CreateOpts {
             count,
             flavor_id: None,
@@ -81,15 +81,15 @@ impl CreateOpts {
             local_volume,
             keypair_name: None,
             affinity_policy: None,
-            availability_zone,
+            availability_zone: String::from(availability_zone),
             labels: None,
         }
     }
 
     /// Add a reference to a pre-created flavor.
     /// It can be omitted in most cases.
-    pub fn with_flavor_id(mut self, flavor_id: String) -> CreateOpts {
-        self.flavor_id = Some(flavor_id);
+    pub fn with_flavor_id(mut self, flavor_id: &str) -> CreateOpts {
+        self.flavor_id = Some(String::from(flavor_id));
         self
     }
 
@@ -116,20 +116,20 @@ impl CreateOpts {
 
     /// Add a blockstorage volume type for each node.
     /// It can be omitted only in cases when flavor_id is set and volume is local.
-    pub fn with_volume_type(mut self, volume_type: String) -> CreateOpts {
-        self.volume_type = Some(volume_type);
+    pub fn with_volume_type(mut self, volume_type: &str) -> CreateOpts {
+        self.volume_type = Some(String::from(volume_type));
         self
     }
 
     /// Add a name of the SSH key that will be added to all nodes.
-    pub fn with_keypair_name(mut self, keypair_name: String) -> CreateOpts {
-        self.keypair_name = Some(keypair_name);
+    pub fn with_keypair_name(mut self, keypair_name: &str) -> CreateOpts {
+        self.keypair_name = Some(String::from(keypair_name));
         self
     }
 
     /// Add an optional parameter to tune nodes affinity.
-    pub fn with_affinity_policy(mut self, affinity_policy: String) -> CreateOpts {
-        self.affinity_policy = Some(affinity_policy);
+    pub fn with_affinity_policy(mut self, affinity_policy: &str) -> CreateOpts {
+        self.affinity_policy = Some(String::from(affinity_policy));
         self
     }
 

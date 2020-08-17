@@ -19,24 +19,24 @@ fn nodegroup_crud() {
     let client = common::setup();
 
     // Prepare create options.
-    let name = "nodegroup-crud".to_string();
-    let nodegroup_opts = nodegroup::schemas::CreateOpts::new(1, false, az.clone())
+    let name = "nodegroup-crud";
+    let nodegroup_opts = nodegroup::schemas::CreateOpts::new(1, false, &az)
         .with_cpus(1)
         .with_ram_mb(1024)
         .with_volume_gb(10)
-        .with_volume_type(format!("fast.{}", az));
-    let create_opts = cluster::schemas::CreateOpts::new(name, kube_version, region)
+        .with_volume_type(&format!("fast.{}", az));
+    let create_opts = cluster::schemas::CreateOpts::new(name, &kube_version, &region)
         .with_nodegroups(vec![nodegroup_opts]);
 
     // Create a new cluster.
     let cluster = common::cluster_common::create_cluster_or_panic(&client, &create_opts);
 
     // Create a new nodegroup for the cluster.
-    let new_nodegroup_opts = nodegroup::schemas::CreateOpts::new(2, false, az.clone())
+    let new_nodegroup_opts = nodegroup::schemas::CreateOpts::new(2, false, &az)
         .with_cpus(1)
         .with_ram_mb(1024)
         .with_volume_gb(10)
-        .with_volume_type(format!("fast.{}", az));
+        .with_volume_type(&format!("fast.{}", az));
     common::nodegroup_common::create_nodegroup_or_panic(&client, &cluster.id, &new_nodegroup_opts);
 
     // List all cluster nodegroups.

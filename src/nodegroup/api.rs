@@ -14,11 +14,11 @@ pub fn get_nodegroup(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
     );
-    let req = client.new_request(Method::GET, path.as_str(), None)?;
+    let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;
 
     let deserialized: schemas::NodegroupRoot =
-        serde_json::from_str(body.as_str()).map_err(|err| Error::DeserializeError(err, body))?;
+        serde_json::from_str(&body).map_err(|err| Error::DeserializeError(err, body))?;
 
     Ok(deserialized.nodegroup)
 }
@@ -31,11 +31,11 @@ pub fn list_nodegroups(
         "/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS
     );
-    let req = client.new_request(Method::GET, path.as_str(), None)?;
+    let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;
 
     let deserialized: schemas::ListRoot =
-        serde_json::from_str(body.as_str()).map_err(|err| Error::DeserializeError(err, body))?;
+        serde_json::from_str(&body).map_err(|err| Error::DeserializeError(err, body))?;
 
     Ok(deserialized.nodegroups)
 }
@@ -52,7 +52,7 @@ pub fn create_nodegroup(
         "/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS
     );
-    let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
+    let req = client.new_request(Method::POST, &path, Some(serialized))?;
     client.do_request(req)?;
 
     Ok(())
@@ -67,7 +67,7 @@ pub fn delete_nodegroup(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
     );
-    let req = client.new_request(Method::DELETE, path.as_str(), None)?;
+    let req = client.new_request(Method::DELETE, &path, None)?;
     client.do_request(req)?;
 
     Ok(())
@@ -86,7 +86,7 @@ pub fn resize_nodegroup(
         "/{}/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id, RESIZE
     );
-    let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
+    let req = client.new_request(Method::POST, &path, Some(serialized))?;
     client.do_request(req)?;
 
     Ok(())
@@ -105,7 +105,7 @@ pub fn update_nodegroup(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
     );
-    let req = client.new_request(Method::PUT, path.as_str(), Some(serialized))?;
+    let req = client.new_request(Method::PUT, &path, Some(serialized))?;
     client.do_request(req)?;
 
     Ok(())
