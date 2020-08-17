@@ -105,7 +105,7 @@ pub fn update_nodegroup(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
     );
-    let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
+    let req = client.new_request(Method::PUT, path.as_str(), Some(serialized))?;
     client.do_request(req)?;
 
     Ok(())
