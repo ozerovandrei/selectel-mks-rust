@@ -212,6 +212,16 @@ impl Client {
     ) -> Result<node::schemas::Node, Error> {
         node::api::get_node(self, cluster_id, nodegroup_id, node_id)
     }
+
+    /// Reinstall a cluster node.
+    pub fn reinstall_node(
+        &self,
+        cluster_id: &str,
+        nodegroup_id: &str,
+        node_id: &str,
+    ) -> Result<(), Error> {
+        node::api::reinstall_node(self, cluster_id, nodegroup_id, node_id)
+    }
 }
 
 /// Methods to work with nodegroups.
