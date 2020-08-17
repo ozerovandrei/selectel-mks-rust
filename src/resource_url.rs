@@ -7,5 +7,6 @@ pub const CLUSTERS: &str = "clusters";
 /// Kubeversions resource URL.
 pub const KUBEVERSIONS: &str = "kubeversions";
 
-/// Nodegroups resource URL.
+/// Nodegroups resource URLs.
 pub const NODEGROUPS: &str = "nodegroups";
+pub const RESIZE: &str = "resize";

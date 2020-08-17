@@ -1,7 +1,7 @@
 use hyper::Method;
 
 use super::super::error::Error;
-use super::super::resource_url::{API_VERSION, CLUSTERS, NODEGROUPS};
+use super::super::resource_url::{API_VERSION, CLUSTERS, NODEGROUPS, RESIZE};
 use super::super::Client;
 use super::schemas;
 
@@ -82,8 +82,8 @@ pub fn resize_nodegroup(
     let serialized = serde_json::to_string(&opts).map_err(Error::SerializeError)?;
 
     let path = format!(
-        "/{}/{}/{}/{}/{}",
-        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
+        "/{}/{}/{}/{}/{}/{}",
+        API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id, RESIZE
     );
     let req = client.new_request(Method::POST, path.as_str(), Some(serialized))?;
     client.do_request(req)?;
