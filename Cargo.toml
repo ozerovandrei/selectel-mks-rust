@@ -26,3 +26,6 @@ serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
 tokio = { version = "^0.2", features = ["full"] }
 url = "^2"
+
+[dev-dependencies]
+retry = "1.1.0"

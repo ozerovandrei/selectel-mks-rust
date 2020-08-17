@@ -1,39 +1,38 @@
-use std::env;
+use selectel_mks::cluster;
 
 pub mod common;
 
 #[test]
-fn get_cluster() {
+fn cluster_crud() {
     if !common::integration_tests_are_enabled() {
         return;
     }
 
-    let cluster_id = env::var(common::TEST_CLUSTER_ID).expect(
-        format!(
-            "Failed to read {} environment variable to test get_cluster method",
-            common::TEST_CLUSTER_ID
-        )
-        .as_str(),
-    );
+    // Retrieve needed variables from env.
+    let region = common::get_region();
+    let kube_version = common::get_kube_version();
 
+    // Prepare MKS client.
     let client = common::setup();
+
+    // Prepare create options.
+    let name = "cluster-crud".to_string();
+    let create_opts = cluster::schemas::CreateOpts::new(name, kube_version, region);
+
+    // Create a new cluster.
+    let cluster = common::cluster_common::create_cluster_or_panic(&client, &create_opts);
+
+    // Get the new cluster.
     let cluster = client
-        .get_cluster(cluster_id.as_str())
-        .expect("Failed to get a cluster");
+        .get_cluster(&cluster.id)
+        .expect("failed to get the created cluster");
+    println!("Created cluster: {:?}\n", cluster);
 
-    assert_eq!(cluster.id, cluster_id);
-    println!("Cluster: {:?}\n", cluster);
-}
-
-#[test]
-fn list_clusters() {
-    if !common::integration_tests_are_enabled() {
-        return;
-    }
-
-    let client = common::setup();
-    let clusters = client.list_clusters().expect("Failed to list clusters");
-
+    // List all clusters.
+    let clusters = client.list_clusters().expect("failed to list all clusters");
     assert!(!clusters.is_empty());
-    println!("Clusters: {:?}\n", clusters);
+    println!("All clusters: {:?}\n", clusters);
+
+    // Delete the created cluster.
+    common::cluster_common::delete_cluster_or_panic(&client, &cluster.id);
 }
