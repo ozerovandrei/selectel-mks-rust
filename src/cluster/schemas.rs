@@ -202,12 +202,16 @@ impl CreateOpts {
     }
 
     /// Add enable_autorepair flag.
+    /// This flag indicates if worker nodes are allowed to be reinstalled automatically
+    /// in case of their unavailability or unhealthiness.
     pub fn with_enable_autorepair(mut self, enable_autorepair: bool) -> CreateOpts {
         self.enable_autorepair = Some(enable_autorepair);
         self
     }
 
     /// Add enable_patch_version_auto_upgrade flag.
+    /// This flag indicates if Kubernetes patch version of the cluster is allowed to be upgraded
+    /// automatically.
     pub fn with_enable_patch_version_auto_upgrade(
         mut self,
         enable_patch_version_auto_upgrade: bool,
@@ -217,12 +221,16 @@ impl CreateOpts {
     }
 
     /// Add zonal flag.
+    /// This flag indicates that cluster has only a single master and that
+    /// control-plane is not in highly available mode.
     pub fn with_zonal(mut self, zonal: bool) -> CreateOpts {
         self.zonal = Some(zonal);
         self
     }
 
     /// Add kubernetes_options.
+    /// This parameter represents additional options such as Pod Security Policy,
+    /// feature gates, etc.
     pub fn with_kubernetes_options(mut self, kubernetes_options: KubernetesOptions) -> CreateOpts {
         self.kubernetes_options = Some(kubernetes_options);
         self
