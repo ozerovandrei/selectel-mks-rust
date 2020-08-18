@@ -5,7 +5,7 @@ use super::super::resource_url::{API_VERSION, CLUSTERS};
 use super::super::Client;
 use super::schemas;
 
-pub fn get_cluster(client: &Client, cluster_id: &str) -> Result<schemas::Cluster, Error> {
+pub fn get(client: &Client, cluster_id: &str) -> Result<schemas::Cluster, Error> {
     let path = format!("/{}/{}/{}", API_VERSION, CLUSTERS, cluster_id);
     let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;
@@ -16,7 +16,7 @@ pub fn get_cluster(client: &Client, cluster_id: &str) -> Result<schemas::Cluster
     Ok(deserialized.cluster)
 }
 
-pub fn list_clusters(client: &Client) -> Result<Vec<schemas::Cluster>, Error> {
+pub fn list(client: &Client) -> Result<Vec<schemas::Cluster>, Error> {
     let path = format!("/{}/{}", API_VERSION, CLUSTERS);
     let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;
@@ -27,10 +27,7 @@ pub fn list_clusters(client: &Client) -> Result<Vec<schemas::Cluster>, Error> {
     Ok(deserialized.clusters)
 }
 
-pub fn create_cluster(
-    client: &Client,
-    opts: &schemas::CreateOpts,
-) -> Result<schemas::Cluster, Error> {
+pub fn create(client: &Client, opts: &schemas::CreateOpts) -> Result<schemas::Cluster, Error> {
     let root_opts = schemas::CreateOptsRoot { cluster: opts };
     let serialized = serde_json::to_string(&root_opts).map_err(Error::SerializeError)?;
 
@@ -44,7 +41,7 @@ pub fn create_cluster(
     Ok(deserialized.cluster)
 }
 
-pub fn delete_cluster(client: &Client, cluster_id: &str) -> Result<(), Error> {
+pub fn delete(client: &Client, cluster_id: &str) -> Result<(), Error> {
     let path = format!("/{}/{}/{}", API_VERSION, CLUSTERS, cluster_id);
     let req = client.new_request(Method::DELETE, &path, None)?;
     client.do_request(req)?;

@@ -5,7 +5,7 @@ use super::super::resource_url::{API_VERSION, KUBEVERSIONS};
 use super::super::Client;
 use super::schemas;
 
-pub fn list_kube_versions(client: &Client) -> Result<Vec<schemas::KubeVersion>, Error> {
+pub fn list(client: &Client) -> Result<Vec<schemas::KubeVersion>, Error> {
     let path = format!("/{}/{}", API_VERSION, KUBEVERSIONS);
     let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;
