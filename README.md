@@ -6,6 +6,19 @@
 
 Pure Rust bindings to the Selectel MKS V1 API.
 
+## Getting Started
+
+Add `selectel-mks-rust` to the `Cargo.toml`:
+
+```toml
+[dependencies]
+selectel-mks-rust = "0.2.0"
+```
+
+Prepare a new `Client` instance and use methods to work with the MKS API.
+
+You can check `./examples` directory and also `./test` directory to see how `Client` methods are used to work with the MKS API.
+
 ## TLS
 
 `selectel-mks-rust` supports [rustls] and [rust-native-tls] for TLS connectivity.
