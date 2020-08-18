@@ -6,6 +6,21 @@
 
 Pure Rust bindings to the Selectel MKS V1 API.
 
+## TLS
+
+`selectel-mks-rust` supports [rustls] and [rust-native-tls] for TLS connectivity.
+`rustls` is used by default, but one can toggle support with Cargo features:
+
+```toml
+[dependencies.selectel-mks-rust]
+version = "0.2.0"
+default-features = false
+features = ["rust-native-tls"]
+```
+
+[rustls]: https://github.com/ctz/rustls
+[rust-native-tls]: https://github.com/sfackler/rust-native-tls
+
 ## License
 
 Licensed under either of
