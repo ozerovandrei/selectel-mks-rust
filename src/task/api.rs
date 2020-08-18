@@ -5,7 +5,7 @@ use super::super::resource_url::{API_VERSION, CLUSTERS, TASKS};
 use super::super::Client;
 use super::schemas;
 
-pub fn get_task(client: &Client, cluster_id: &str, task_id: &str) -> Result<schemas::Task, Error> {
+pub fn get(client: &Client, cluster_id: &str, task_id: &str) -> Result<schemas::Task, Error> {
     let path = format!(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, TASKS, task_id
@@ -19,7 +19,7 @@ pub fn get_task(client: &Client, cluster_id: &str, task_id: &str) -> Result<sche
     Ok(deserialized.task)
 }
 
-pub fn list_tasks(client: &Client, cluster_id: &str) -> Result<Vec<schemas::Task>, Error> {
+pub fn list(client: &Client, cluster_id: &str) -> Result<Vec<schemas::Task>, Error> {
     let path = format!("/{}/{}/{}/{}", API_VERSION, CLUSTERS, cluster_id, TASKS);
     let req = client.new_request(Method::GET, &path, None)?;
     let body = client.do_request(req)?;

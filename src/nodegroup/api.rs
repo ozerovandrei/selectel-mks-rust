@@ -5,7 +5,7 @@ use super::super::resource_url::{API_VERSION, CLUSTERS, NODEGROUPS, RESIZE};
 use super::super::Client;
 use super::schemas;
 
-pub fn get_nodegroup(
+pub fn get(
     client: &Client,
     cluster_id: &str,
     nodegroup_id: &str,
@@ -23,10 +23,7 @@ pub fn get_nodegroup(
     Ok(deserialized.nodegroup)
 }
 
-pub fn list_nodegroups(
-    client: &Client,
-    cluster_id: &str,
-) -> Result<Vec<schemas::Nodegroup>, Error> {
+pub fn list(client: &Client, cluster_id: &str) -> Result<Vec<schemas::Nodegroup>, Error> {
     let path = format!(
         "/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS
@@ -40,11 +37,7 @@ pub fn list_nodegroups(
     Ok(deserialized.nodegroups)
 }
 
-pub fn create_nodegroup(
-    client: &Client,
-    cluster_id: &str,
-    opts: &schemas::CreateOpts,
-) -> Result<(), Error> {
+pub fn create(client: &Client, cluster_id: &str, opts: &schemas::CreateOpts) -> Result<(), Error> {
     let root_opts = schemas::CreateOptsRoot { nodegroup: opts };
     let serialized = serde_json::to_string(&root_opts).map_err(Error::SerializeError)?;
 
@@ -58,11 +51,7 @@ pub fn create_nodegroup(
     Ok(())
 }
 
-pub fn delete_nodegroup(
-    client: &Client,
-    cluster_id: &str,
-    nodegroup_id: &str,
-) -> Result<(), Error> {
+pub fn delete(client: &Client, cluster_id: &str, nodegroup_id: &str) -> Result<(), Error> {
     let path = format!(
         "/{}/{}/{}/{}/{}",
         API_VERSION, CLUSTERS, cluster_id, NODEGROUPS, nodegroup_id
@@ -73,7 +62,7 @@ pub fn delete_nodegroup(
     Ok(())
 }
 
-pub fn resize_nodegroup(
+pub fn resize(
     client: &Client,
     cluster_id: &str,
     nodegroup_id: &str,
@@ -92,7 +81,7 @@ pub fn resize_nodegroup(
     Ok(())
 }
 
-pub fn update_nodegroup(
+pub fn update(
     client: &Client,
     cluster_id: &str,
     nodegroup_id: &str,

@@ -5,7 +5,7 @@ use super::super::resource_url::{API_VERSION, CLUSTERS, NODEGROUPS, REINSTALL};
 use super::super::Client;
 use super::schemas;
 
-pub fn get_node(
+pub fn get(
     client: &Client,
     cluster_id: &str,
     nodegroup_id: &str,
@@ -24,7 +24,7 @@ pub fn get_node(
     Ok(deserialized.node)
 }
 
-pub fn reinstall_node(
+pub fn reinstall(
     client: &Client,
     cluster_id: &str,
     nodegroup_id: &str,
