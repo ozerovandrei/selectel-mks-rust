@@ -33,22 +33,22 @@ impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &*self {
             Error::DeserializeError(err, body) => {
-                format!("failed to deserialize body: {}, error: {}", err, body).fmt(f)
+                format!("Failed to deserialize body: {}, error: {}", err, body).fmt(f)
             }
             Error::SerializeError(err) => {
-                format!("failed to serialize a struct, error: {}", err).fmt(f)
+                format!("Failed to serialize a struct, error: {}", err).fmt(f)
             }
-            Error::EndpointError => "failed to parse base endpoint URL".fmt(f),
-            Error::EmptyTokenError => "token cannot be empty".fmt(f),
+            Error::EndpointError => "Failed to parse base endpoint URL".fmt(f),
+            Error::EmptyTokenError => "Token cannot be empty".fmt(f),
             Error::HttpError(status, err) => {
-                format!("bad status code: {}, error body: {}", status, err).fmt(f)
+                format!("Bad status code: {}, error body: {}", status, err).fmt(f)
             }
             Error::HyperError(err) => {
-                format!("failed to make the request due to Hyper error: {}", err).fmt(f)
+                format!("Failed to make the request due to Hyper error: {}", err).fmt(f)
             }
-            Error::RequestError => "failed to build a new request".fmt(f),
-            Error::TimeoutError => "request timed out".fmt(f),
-            Error::UrlError => "failed to parse URL for request".fmt(f),
+            Error::RequestError => "Failed to build a new request".fmt(f),
+            Error::TimeoutError => "Request timed out".fmt(f),
+            Error::UrlError => "Failed to parse URL for request".fmt(f),
         }
     }
 }
