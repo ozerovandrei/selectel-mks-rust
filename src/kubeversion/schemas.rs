@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// KubeVersion represents a deserialized Kubernetes version body from an API response.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct KubeVersion {
     /// Version represents the supported Kubernetes version in format: "X.Y.Z".
     pub version: String,
@@ -11,7 +11,7 @@ pub struct KubeVersion {
 }
 
 /// KubeVersionsRoot represents a list of deserialized Kubernetes versions.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct KubeVersionsRoot {
     pub kube_versions: Vec<KubeVersion>,
 }

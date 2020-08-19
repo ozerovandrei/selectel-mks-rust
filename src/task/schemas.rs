@@ -1,8 +1,8 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// Status represents a enum with various task statuses.
-#[derive(Deserialize, Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Status {
     InProgress,
@@ -23,7 +23,7 @@ impl std::fmt::Display for Status {
 }
 
 /// Type represents a enum with various task types.
-#[derive(Deserialize, Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Type {
     CreateCluster,
@@ -60,7 +60,7 @@ impl std::fmt::Display for Type {
 }
 
 /// Task represents a deserialized task body from an API response.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Task {
     /// Task identifier.
     pub id: String,
@@ -83,13 +83,13 @@ pub struct Task {
 }
 
 /// TaskRoot represents a root of a deserialized task.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct TaskRoot {
     pub task: Task,
 }
 
 /// ListRoot represents a root of a list with deserialized tasks.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ListRoot {
     pub tasks: Vec<Task>,
 }

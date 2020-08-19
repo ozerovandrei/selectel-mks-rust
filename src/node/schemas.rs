@@ -1,8 +1,8 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// Node represents a deserialized node body from an API response.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Node {
     // Node identifier.
     pub id: String,
@@ -24,7 +24,7 @@ pub struct Node {
 }
 
 /// NodeRoot represents a root of a deserialized node.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct NodeRoot {
     pub node: Node,
 }
