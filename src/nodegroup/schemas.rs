@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use super::super::node::schemas::Node;
 
 /// Nodegroup represents a deserialized nodegroup body from an API response.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Nodegroup {
     /// Nodegroup identifier.
     pub id: String,
@@ -42,13 +42,13 @@ pub struct Nodegroup {
 }
 
 /// NodegroupRoot represents a root of a deserialized nodegroup.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct NodegroupRoot {
     pub nodegroup: Nodegroup,
 }
 
 /// ListRoot represents a root of a list with deserialized nodegroups.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ListRoot {
     pub nodegroups: Vec<Nodegroup>,
 }

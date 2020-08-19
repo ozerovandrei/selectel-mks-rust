@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use super::super::nodegroup;
 
 /// Status represents a enum with various cluster statuses.
-#[derive(Deserialize, Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Status {
     Active,
@@ -53,7 +53,7 @@ impl std::fmt::Display for Status {
 }
 
 /// Cluster represents a deserialized cluster body from an API response.
-#[derive(Deserialize, Debug)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Cluster {
     /// Cluster identifier.
     pub id: String,
@@ -120,13 +120,13 @@ pub struct Cluster {
 }
 
 /// ClusterRoot represents a root of a deserialized cluster.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ClusterRoot {
     pub cluster: Cluster,
 }
 
 /// ListRoot represents a root of a list with deserialized clusters.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ListRoot {
     pub clusters: Vec<Cluster>,
 }
