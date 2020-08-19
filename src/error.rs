@@ -53,6 +53,8 @@ impl std::fmt::Display for Error {
     }
 }
 
+impl std::error::Error for Error {}
+
 impl std::convert::From<hyper::Error> for Error {
     fn from(e: hyper::Error) -> Self {
         Error::HyperError(e)
@@ -62,5 +64,28 @@ impl std::convert::From<hyper::Error> for Error {
 impl std::convert::From<tokio::time::Elapsed> for Error {
     fn from(_e: tokio::time::Elapsed) -> Self {
         Error::TimeoutError
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn impl_error() {
+        #[derive(Debug)]
+        struct B(Option<Box<dyn std::error::Error + 'static>>);
+
+        impl std::fmt::Display for B {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(f, "B")
+            }
+        }
+
+        impl std::error::Error for B {}
+
+        let err = B(Some(Box::new(Error::RequestError)));
+
+        let _err = &err as &(dyn std::error::Error);
     }
 }
