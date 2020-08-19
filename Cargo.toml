@@ -9,7 +9,7 @@ keywords = ["api", "sdk", "selectel", "mks", "kubernetes"]
 license = "MIT OR Apache-2.0"
 name = "selectel-mks"
 repository = "https://github.com/ozerovandrei/selectel-mks-rust.git"
-version = "0.2.0"
+version = "0.2.1"
 
 [features]
 default = ["rustls"]
