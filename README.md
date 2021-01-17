@@ -2,7 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/selectel-mks.svg)](https://crates.io/crates/selectel-mks)
 [![Documentation](https://docs.rs/selectel-mks/badge.svg)](https://docs.rs/selectel-mks)
-![CI](https://github.com/ozerovandrei/selectel-mks-rust/workflows/CI/badge.svg?branch=master)
+![CI](https://github.com/ozerovandrei/selectel-mks-rust/workflows/CI/badge.svg?branch=main)
 
 Pure Rust bindings to the Selectel MKS V1 API.
 
